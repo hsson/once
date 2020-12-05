@@ -23,7 +23,7 @@ func TestOnce(t *testing.T) {
 }
 
 func TestOnceError(t *testing.T) {
-	o := once.OnceError{}
+	o := once.Error{}
 	count := 0
 	expected := errors.New("some error")
 
@@ -43,7 +43,7 @@ func TestOnceError(t *testing.T) {
 }
 
 func TestOnceValue(t *testing.T) {
-	o := once.OnceValue{}
+	o := once.Value{}
 	count := 0
 	expected := "some value"
 
@@ -63,7 +63,7 @@ func TestOnceValue(t *testing.T) {
 }
 
 func TestOnceValueError(t *testing.T) {
-	o := once.OnceValueError{}
+	o := once.ValueError{}
 	count := 0
 	expectedValue := "some value"
 	expectedErr := errors.New("some error")
