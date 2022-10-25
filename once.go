@@ -49,15 +49,15 @@ func (o *Error) Do(f func() error) error {
 }
 
 // Value is similar to Once, except it returns a value.
-type Value struct {
+type Value[T any] struct {
 	m     sync.Mutex
 	done  uint32
-	value interface{}
+	value T
 }
 
 // Do runs the specified function only once, but all callers gets the same
 // result from that single execution.
-func (o *Value) Do(f func() interface{}) interface{} {
+func (o *Value[T]) Do(f func() T) T {
 	if atomic.LoadUint32(&o.done) == 1 {
 		return o.value
 	}
@@ -72,16 +72,16 @@ func (o *Value) Do(f func() interface{}) interface{} {
 }
 
 // ValueError is similar to Once, except it return a (value, error) tuple
-type ValueError struct {
+type ValueError[T any] struct {
 	m     sync.Mutex
 	done  uint32
-	value interface{}
+	value T
 	err   error
 }
 
 // Do runs the specified function only once, but all callers gets the same
 // result from that single execution.
-func (o *ValueError) Do(f func() (interface{}, error)) (interface{}, error) {
+func (o *ValueError[T]) Do(f func() (T, error)) (T, error) {
 	if atomic.LoadUint32(&o.done) == 1 {
 		return o.value, o.err
 	}
