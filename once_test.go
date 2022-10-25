@@ -43,12 +43,12 @@ func TestOnceError(t *testing.T) {
 }
 
 func TestOnceValue(t *testing.T) {
-	o := once.Value{}
+	o := once.Value[string]{}
 	count := 0
 	expected := "some value"
 
 	for i := 0; i < 100; i++ {
-		value := o.Do(func() interface{} {
+		value := o.Do(func() string {
 			count++
 			return expected
 		})
@@ -63,13 +63,13 @@ func TestOnceValue(t *testing.T) {
 }
 
 func TestOnceValueError(t *testing.T) {
-	o := once.ValueError{}
+	o := once.ValueError[string]{}
 	count := 0
 	expectedValue := "some value"
 	expectedErr := errors.New("some error")
 
 	for i := 0; i < 100; i++ {
-		value, err := o.Do(func() (interface{}, error) {
+		value, err := o.Do(func() (string, error) {
 			count++
 			return expectedValue, expectedErr
 		})
